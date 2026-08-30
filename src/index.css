@@ -25,6 +25,7 @@
   --color-fraco: #4d5b70;
 
   /* ---- Tipografia ----------------------------------------------- */
+  --font-marca: 'Chakra Petch', 'Arial Narrow', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
   --font-sans: 'Inter', system-ui, sans-serif;
 

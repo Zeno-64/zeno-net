@@ -21,7 +21,7 @@ export default function Janela() {
         </div>
 
         <div className="px-6 pb-6 pt-7">
-          <h1 className="font-mono text-3xl font-bold tracking-[0.28em] text-titulo">
+          <h1 className="font-marca text-[2.1rem] font-bold italic leading-none tracking-[-0.02em] text-titulo">
             {site.titulo}
           </h1>
           <p className="mt-1 text-[0.82rem] text-texto">{site.papel}</p>

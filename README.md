@@ -72,7 +72,9 @@ a borda e o cursor param de animar de propósito.
 - **Links de GitHub / LinkedIn / e-mail:** preencher a `url` em `redes` — item
   com url vazia não é renderizado. Hoje estão todos vazios, então o rodapé de
   redes nem aparece.
-- **Cores:** o bloco `@theme` no topo de `src/index.css`.
+- **Cores e fontes:** o bloco `@theme` no topo de `src/index.css`. A fonte do
+  logotipo é a `--font-marca` (Chakra Petch itálico); trocar exige mexer
+  também no `<link>` do Google Fonts em `index.html`.
 
 ## Os outros dois domínios
 

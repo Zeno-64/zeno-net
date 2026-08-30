@@ -2,7 +2,7 @@
 
 export const site = {
   nick: 'zeno',
-  titulo: 'ZENO',
+  titulo: 'Zeno',
   papel: 'Desenvolvedor',
   /** Linhas que o terminal digita, em loop. Mantenha curtas (~40 caracteres). */
   linhas: [
