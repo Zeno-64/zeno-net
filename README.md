@@ -42,13 +42,19 @@ pasta acima.
 
 ```
 public/       favicon.svg · robots.txt · sitemap.xml
+              perfil.webp  recorte quadrado do rosto (o que vai pro ar)
+brand/        kaneki.jpg — original enviado. Fica FORA de public/ pra não
+              ser publicado junto: só serve de fonte do recorte
 src/
-  data/site.ts        TODO o conteúdo editável (nick, frases, domínios, redes)
+  data/site.ts        TODO o conteúdo editável (nick, frases, domínios,
+                      redes, perfil, trabalhos)
   components/
     Fundo.tsx         brilho azul + malha do fundo (decorativo)
     Janela.tsx        a janela em si
+    Avatar.tsx        foto de perfil com o facho vermelho
     Digitando.tsx     efeito de digitação em loop
     LinhaDominio.tsx  cada linha da lista de domínios
+    Trabalhos.tsx     as duas telinhas com o facho branco
   index.css           tema (@theme) + a animação da borda (.moldura-luz)
   App.tsx
 ```
@@ -63,6 +69,32 @@ O giro depende de `@property --angulo` — sem ele o navegador não interpola um
 ângulo dentro de `conic-gradient`. Em navegador antigo a borda fica azul e
 parada, o que é um fallback aceitável. Com `prefers-reduced-motion: reduce`,
 a borda e o cursor param de animar de propósito.
+
+A cor e a velocidade são variáveis, então a mesma animação serve os três usos:
+
+| Classe | Onde | Luz |
+| --- | --- | --- |
+| `.moldura-luz` | a janela principal | azul (padrão) |
+| `+ .luz-vermelha` | a foto de perfil | vermelha |
+| `+ .luz-branca` | as duas telinhas | branca |
+
+`.giro-rapido` (4s) e `.giro-lento` (9s) mudam só a velocidade. Como o avatar
+é uma foto inteiramente vermelha, ele leva um anel escuro entre a foto e a
+moldura — sem esse respiro a luz se dissolve dentro da imagem.
+
+## A foto de perfil
+
+`public/perfil.webp` é gerado de `brand/kaneki.jpg`: recorte quadrado de
+1080×1080 centrado na cabeça (x=966), usando a altura inteira do original.
+
+Vale saber por que não dá pra enquadrar de outro jeito: a cabeça tem 1444px de
+largura e a foto só 1080px de altura. Um quadrado que mostre o fundo vermelho
+dos dois lados teria que ser mais largo que 1444px, logo mais alto que a foto —
+sobraria faixa vazia. Com o recorte de 1080 o cabelo sangra pelas laterais no
+alto e o vermelho real aparece embaixo, ao lado do pescoço, sem inventar fundo.
+
+Para trocar a foto: substituir `brand/kaneki.jpg`, achar o centro da cabeça e rodar
+de novo o recorte com Pillow, mantendo o nome `perfil.webp`.
 
 ## Editar depois
 

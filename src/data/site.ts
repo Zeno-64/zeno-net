@@ -12,6 +12,38 @@ export const site = {
   ],
 } as const
 
+/** Foto de perfil: recorte quadrado de 1080x1080 de brand/kaneki.jpg,
+ *  centrado na cabeça (x=966), usando a altura inteira do original. O
+ *  vermelho do fundo aparece embaixo, dos dois lados do pescoço. */
+export const perfil = {
+  imagem: '/perfil.webp',
+  alt: 'Kaneki, de Tokyo Ghoul, sobre fundo vermelho',
+} as const
+
+export type Trabalho = {
+  nome: string
+  host: string
+  url: string
+  descricao: string
+}
+
+export const tituloTrabalhos = 'My work'
+
+export const trabalhos: Trabalho[] = [
+  {
+    nome: 'CleduArt',
+    host: 'cleduart.com.br',
+    url: 'https://www.cleduart.com.br/',
+    descricao: 'Acervo de antiguidades e coleções',
+  },
+  {
+    nome: 'Natalie Calegari',
+    host: 'nataliecalegari.com.br',
+    url: 'https://www.nataliecalegari.com.br/',
+    descricao: 'Estética e injetáveis, em São Paulo',
+  },
+]
+
 export type Dominio = {
   host: string
   url: string

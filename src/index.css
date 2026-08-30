@@ -16,6 +16,13 @@
   --color-azul-claro: #58b3ff;
   --color-ciano: #7df0ff;
 
+  /* ---- Vermelho (a luz do avatar) e branco (a luz dos trabalhos) -- */
+  --color-vermelho: #e11d3a;
+  --color-vermelho-claro: #ff6b7a;
+  --color-vermelho-quente: #ffd2d6;
+  --color-branco-luz: #ffffff;
+  --color-branco-frio: #c9d6e8;
+
   /* ---- Texto -----------------------------------------------------
      Sobre #05070d: titulo ~17:1 · texto ~11:1 · suave ~5,4:1.
      O "suave" só é usado em 14px+ (passa AA). */
@@ -26,6 +33,7 @@
 
   /* ---- Tipografia ----------------------------------------------- */
   --font-marca: 'Chakra Petch', 'Arial Narrow', sans-serif;
+  --font-neon: 'Monoton', 'Chakra Petch', cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
   --font-sans: 'Inter', system-ui, sans-serif;
 
@@ -70,6 +78,14 @@
   /* A moldura: o gradiente cônico é o fundo da caixa e o miolo tampa
      o centro, sobrando só 1px de luz na borda. */
   .moldura-luz {
+    /* Cor e velocidade do facho — sobrescritas pelos modificadores
+       .luz-vermelha / .luz-branca e .giro-*. */
+    --luz-base: var(--color-azul);
+    --luz: var(--color-azul-claro);
+    --luz-quente: var(--color-ciano);
+    --giro: 6s;
+    --vazamento: 16px;
+
     position: relative;
     padding: 1px;
     border-radius: 18px;
@@ -77,18 +93,44 @@
       conic-gradient(
         from var(--angulo),
         transparent 0deg 200deg,
-        color-mix(in oklab, var(--color-azul) 70%, transparent) 265deg,
-        var(--color-azul-claro) 300deg,
-        var(--color-ciano) 320deg,
-        var(--color-azul-claro) 336deg,
+        color-mix(in oklab, var(--luz-base) 70%, transparent) 265deg,
+        var(--luz) 300deg,
+        var(--luz-quente) 320deg,
+        var(--luz) 336deg,
         transparent 360deg
       ),
       linear-gradient(
         180deg,
-        color-mix(in oklab, var(--color-azul) 26%, transparent),
-        color-mix(in oklab, var(--color-azul) 8%, transparent)
+        color-mix(in oklab, var(--luz-base) 26%, transparent),
+        color-mix(in oklab, var(--luz-base) 8%, transparent)
       );
-    animation: girar-luz 6s linear infinite;
+    animation: girar-luz var(--giro) linear infinite;
+  }
+
+  .luz-vermelha {
+    --luz-base: var(--color-vermelho);
+    --luz: var(--color-vermelho-claro);
+    --luz-quente: var(--color-vermelho-quente);
+  }
+
+  .luz-branca {
+    --luz-base: var(--color-branco-frio);
+    --luz: var(--color-branco-luz);
+    --luz-quente: var(--color-branco-luz);
+  }
+
+  /* Aro do avatar: mais grosso, pra luz vermelha ter corpo. */
+  .moldura-redonda {
+    border-radius: 50%;
+    padding: 2px;
+  }
+
+  .giro-rapido {
+    --giro: 4s;
+  }
+
+  .giro-lento {
+    --giro: 9s;
   }
 
   /* Cópia borrada por baixo: o brilho que vaza da borda pro fundo. */
@@ -98,7 +140,7 @@
     inset: -2px;
     border-radius: inherit;
     background: inherit;
-    filter: blur(16px);
+    filter: blur(var(--vazamento));
     opacity: 0.55;
     z-index: -1;
   }
@@ -133,8 +175,8 @@
   .moldura-luz {
     background: linear-gradient(
       145deg,
-      var(--color-azul-claro),
-      color-mix(in oklab, var(--color-azul) 30%, transparent)
+      var(--luz),
+      color-mix(in oklab, var(--luz-base) 30%, transparent)
     );
   }
 }

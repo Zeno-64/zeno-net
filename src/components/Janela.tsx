@@ -1,3 +1,4 @@
+import Avatar from './Avatar'
 import Digitando from './Digitando'
 import LinhaDominio from './LinhaDominio'
 import { dominios, redes, site } from '../data/site'
@@ -20,11 +21,16 @@ export default function Janela() {
           </span>
         </div>
 
-        <div className="px-6 pb-6 pt-7">
-          <h1 className="font-marca text-[2.1rem] font-bold italic leading-none tracking-[-0.02em] text-titulo">
-            {site.titulo}
-          </h1>
-          <p className="mt-1 text-[0.82rem] text-texto">{site.papel}</p>
+        <div className="px-6 pb-6 pt-6">
+          <div className="flex items-center gap-4">
+            <Avatar />
+            <div className="min-w-0">
+              <h1 className="font-marca text-[2.1rem] font-bold italic leading-none tracking-[-0.02em] text-titulo">
+                {site.titulo}
+              </h1>
+              <p className="mt-1 text-[0.82rem] text-texto">{site.papel}</p>
+            </div>
+          </div>
 
           <div className="mt-4">
             <Digitando linhas={site.linhas} />
