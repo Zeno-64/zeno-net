@@ -1,0 +1,139 @@
+@import 'tailwindcss';
+
+@theme {
+  /* ---- Superfícies ------------------------------------------------
+     Site escuro por padrão: a janela central precisa parecer acesa,
+     e a luz azul só existe se tiver escuro em volta. */
+  --color-fundo: #05070d;
+  --color-fundo-2: #080b14;
+  --color-vidro: #0c111c;
+
+  /* ---- Azul (a luz) ----------------------------------------------
+     Do mais frio ao mais claro. O ciano é o ponto quente do facho
+     que corre na borda. */
+  --color-azul-fundo: #0b2a4a;
+  --color-azul: #2f81f7;
+  --color-azul-claro: #58b3ff;
+  --color-ciano: #7df0ff;
+
+  /* ---- Texto -----------------------------------------------------
+     Sobre #05070d: titulo ~17:1 · texto ~11:1 · suave ~5,4:1.
+     O "suave" só é usado em 14px+ (passa AA). */
+  --color-titulo: #f2f6fb;
+  --color-texto: #c3cede;
+  --color-suave: #8093ab;
+  --color-fraco: #4d5b70;
+
+  /* ---- Tipografia ----------------------------------------------- */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* ---- Timing --------------------------------------------------- */
+  --ease-suave: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Ângulo animável do facho de luz. Sem @property o navegador não
+   interpola um ângulo dentro de conic-gradient — a borda ficaria
+   parada (degrada para uma borda azul estática, que é aceitável). */
+@property --angulo {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    background-color: var(--color-fundo);
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-texto);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-azul-claro);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* A moldura: o gradiente cônico é o fundo da caixa e o miolo tampa
+     o centro, sobrando só 1px de luz na borda. */
+  .moldura-luz {
+    position: relative;
+    padding: 1px;
+    border-radius: 18px;
+    background:
+      conic-gradient(
+        from var(--angulo),
+        transparent 0deg 200deg,
+        color-mix(in oklab, var(--color-azul) 70%, transparent) 265deg,
+        var(--color-azul-claro) 300deg,
+        var(--color-ciano) 320deg,
+        var(--color-azul-claro) 336deg,
+        transparent 360deg
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--color-azul) 26%, transparent),
+        color-mix(in oklab, var(--color-azul) 8%, transparent)
+      );
+    animation: girar-luz 6s linear infinite;
+  }
+
+  /* Cópia borrada por baixo: o brilho que vaza da borda pro fundo. */
+  .moldura-luz::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(16px);
+    opacity: 0.55;
+    z-index: -1;
+  }
+
+  .cursor-piscando {
+    animation: piscar 1.1s steps(1) infinite;
+  }
+}
+
+@keyframes girar-luz {
+  to {
+    --angulo: 360deg;
+  }
+}
+
+@keyframes piscar {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moldura-luz,
+  .cursor-piscando {
+    animation: none;
+  }
+  .moldura-luz {
+    background: linear-gradient(
+      145deg,
+      var(--color-azul-claro),
+      color-mix(in oklab, var(--color-azul) 30%, transparent)
+    );
+  }
+}
