@@ -119,6 +119,15 @@
     --luz-quente: var(--color-branco-luz);
   }
 
+  /* Painel da lâmpada: o facho assume a cor da luz, vinda de
+     --cor-lampada (definida inline pelo componente). */
+  .luz-lampada {
+    --luz-base: var(--cor-lampada);
+    --luz: color-mix(in oklab, var(--cor-lampada) 75%, white);
+    --luz-quente: color-mix(in oklab, var(--cor-lampada) 45%, white);
+    transition: --cor-lampada 0.5s var(--ease-suave);
+  }
+
   /* Aro do avatar: mais grosso, pra luz vermelha ter corpo. */
   .moldura-redonda {
     border-radius: 50%;
